@@ -16,6 +16,7 @@ This guide applies to the entire repository. Expected deliverables are maintaina
 - `README.md` — user-facing setup, build, and usage documentation.
 - `ARCHITECTURE.md` — architecture notes and diagrams.
 - `CHANGELOG.md` — release history.
+- `recommendations.md` — advisory notes on transcription libraries and models; not a task list.
 - `prompts.md` — concise reverse-chronological log of program-related user prompts.
 - `tasks.md` — active work, handoff notes, and open questions.
 
@@ -34,6 +35,7 @@ This guide applies to the entire repository. Expected deliverables are maintaina
 
 - Keep reusable project utilities in `scripts/`; do not place helper scripts in the repository root unless they are true entry points.
 - Keep reusable agent workflows in `skills/` when a repeatable workflow becomes substantial; existing `.agents/workflows/` files are retained for compatibility.
+- Notice recurring multi-step work and propose a focused reusable skill in `skills/` when it would materially improve consistency; do not create skills for one-off tasks.
 - Keep generated exports and packaged deliverables in an appropriate output folder only when a real recurring output requires one. Do not create speculative folders.
 - Use clear, purpose-based, lowercase kebab-case names for new folders unless a platform or project convention requires otherwise.
 - Update the nearest relevant README or index whenever documentation structure changes.

@@ -2,6 +2,27 @@
 
 This file stores prompts used for development.
 
+## 2026-08-28T17:02:23-04:00 — Write transcription technology recommendations
+
+- **Goal:** Review the current WhisperPete stack against newer local speech-to-text libraries and record recommendations in `recommendations.md`.
+- **Prompt summary:** Asked for a project review focused on how voice transcription support libraries have changed since initialization, with findings written to root `recommendations.md`.
+- **Computer:** XPS-8950
+- **Technical context:** .NET 8 tray app using NAudio 2.2.1, ONNX Runtime DirectML 1.22.2, Olive Whisper ONNX models, and a hand-rolled `WhisperEngine`.
+
+## 2026-08-28T17:00:34-04:00 — Audit current repository and transcription technology
+
+- **Goal:** Identify post-initialization gaps, current library/technology options, and recommendations for an independent follow-up audit.
+- **Prompt summary:** Requested a fresh repository review covering changed support libraries and Wispr-related voice-transcription technologies, with recommendations recorded in `tasks.md`.
+- **Computer:** XPS-8950
+- **Technical context:** .NET 8 WPF/tray solution using NAudio, ONNX Runtime DirectML, Olive Whisper ONNX models, and local text injection.
+
+## 2026-08-28T16:57:05-04:00 — Decide on C# development tooling
+
+- **Goal:** Decide whether to install Microsoft’s C# Dev Kit extension in VS Code for this repository.
+- **Prompt summary:** Asked whether the recommended Microsoft C# Dev Kit extension should be installed.
+- **Computer:** XPS-8950
+- **Technical context:** WhisperPete is a .NET 8 solution containing C# projects and a WPF Windows tray application.
+
 ## 2026-08-28T16:55:22-04:00 — Retrofit agentic project guidance
 
 - **Goal:** Bring the existing repository into alignment with the vendor-neutral agentic initializer and replace the legacy Gemini instruction file with `AGENTS.md`.

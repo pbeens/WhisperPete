@@ -43,7 +43,7 @@
 
 WhisperPete includes built-in **Agentic Workflows** (Skills) located in `.agents/workflows/`. These are designed for use with AI coding assistants (like Antigravity) to automate repetitive tasks.
 
-Project-wide agent guidance is in [`AGENTS.md`](AGENTS.md), active handoff tasks are in [`tasks.md`](tasks.md), and program-related prompt history is maintained in [`prompts.md`](prompts.md).
+Project-wide agent guidance is in [`AGENTS.md`](AGENTS.md), active handoff tasks are in [`tasks.md`](tasks.md), program-related prompt history is maintained in [`prompts.md`](prompts.md), and transcription-library recommendations are in [`recommendations.md`](recommendations.md).
 
 | Command | Purpose |
 | :--- | :--- |
