@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhisperPete.Tray", "WhisperPete.Tray\WhisperPete.Tray.csproj", "{7657EE7E-792B-4F9E-9F17-083A4860BC09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhisperPete.Core", "WhisperPete.Core\WhisperPete.Core.csproj", "{9B9B1ADF-C921-4BAA-8324-E66590256FF1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7657EE7E-792B-4F9E-9F17-083A4860BC09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7657EE7E-792B-4F9E-9F17-083A4860BC09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7657EE7E-792B-4F9E-9F17-083A4860BC09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7657EE7E-792B-4F9E-9F17-083A4860BC09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B9B1ADF-C921-4BAA-8324-E66590256FF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B9B1ADF-C921-4BAA-8324-E66590256FF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B9B1ADF-C921-4BAA-8324-E66590256FF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B9B1ADF-C921-4BAA-8324-E66590256FF1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

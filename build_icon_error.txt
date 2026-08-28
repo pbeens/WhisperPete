@@ -1,0 +1,15 @@
+MSBuild version 17.8.3+195e7f5a3 for .NET
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  WhisperPete.Core -> D:\My Documents\GitHub\Wisprflow-ALternative\WhisperPete.Core\bin\Release\net8.0\WhisperPete.Core.dll
+D:\My Documents\GitHub\Wisprflow-ALternative\WhisperPete.Tray\App.xaml.cs(22,32): error CS0103: The name 'Path' does not exist in the current context [D:\My Documents\GitHub\Wisprflow-ALternative\WhisperPete.Tray\WhisperPete.Tray.csproj]
+D:\My Documents\GitHub\Wisprflow-ALternative\WhisperPete.Tray\App.xaml.cs(23,21): error CS0103: The name 'File' does not exist in the current context [D:\My Documents\GitHub\Wisprflow-ALternative\WhisperPete.Tray\WhisperPete.Tray.csproj]
+
+Build FAILED.
+
+D:\My Documents\GitHub\Wisprflow-ALternative\WhisperPete.Tray\App.xaml.cs(22,32): error CS0103: The name 'Path' does not exist in the current context [D:\My Documents\GitHub\Wisprflow-ALternative\WhisperPete.Tray\WhisperPete.Tray.csproj]
+D:\My Documents\GitHub\Wisprflow-ALternative\WhisperPete.Tray\App.xaml.cs(23,21): error CS0103: The name 'File' does not exist in the current context [D:\My Documents\GitHub\Wisprflow-ALternative\WhisperPete.Tray\WhisperPete.Tray.csproj]
+    0 Warning(s)
+    2 Error(s)
+
+Time Elapsed 00:00:00.94

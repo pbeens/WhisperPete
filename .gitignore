@@ -1,0 +1,29 @@
+# .gitignore for WhisperPete
+
+# --- AI & Project Specific ---
+# Keep AGENTS.md, prompts.md, and tasks.md available to collaborators.
+
+# --- Large Binary Models ---
+*.onnx
+*.onnx_data
+ortextensions.dll
+
+# --- Application Data / Logs ---
+debug_recordings/
+app_log.txt
+settings.json
+
+# --- .NET / C# standard ---
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# --- VS Code ---
+.vscode/
+
+# --- macOS ---
+.DS_Store
