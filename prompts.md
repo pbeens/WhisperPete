@@ -1,5 +1,12 @@
 # prompts.md
 
+## 2026-08-30T13:08:58-04:00 — Correct model archive instructions
+
+- **Goal:** Make the model download instructions accurately explain `.tar.bz2` extraction on Windows.
+- **Prompt summary:** Reported that Windows does not automatically extract the Parakeet BZ2 archive.
+- **Computer:** XPS-8950
+- **Technical context:** README now directs users to 7-Zip and explains the two extraction steps needed to unpack the `.tar.bz2` archive.
+
 ## 2026-08-30T13:05:52-04:00 — Simplify model-folder setup
 
 - **Goal:** Make the README automatically create the model destination folder for first-time users.

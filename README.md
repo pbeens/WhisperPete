@@ -14,7 +14,14 @@ Save the file and double-click it.
 
 [Download the Parakeet model](https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8.tar.bz2)
 
-The download is about 670 MB. Extract it with Windows or 7-Zip.
+The download is about 670 MB. Windows does not extract `.tar.bz2` files by itself, so install [7-Zip](https://www.7-zip.org/download.html) first.
+
+After installing 7-Zip:
+
+1. Right-click the downloaded file.
+2. Choose **7-Zip → Extract Here**. This creates a `.tar` file.
+3. Right-click the new `.tar` file.
+4. Choose **7-Zip → Extract Here** again.
 
 Before moving the model, create its destination folder automatically:
 
