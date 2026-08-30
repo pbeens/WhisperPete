@@ -16,6 +16,16 @@ Save the file and double-click it.
 
 The download is about 670 MB. Extract it with Windows or 7-Zip.
 
+Before moving the model, create its destination folder automatically:
+
+1. Press **Windows key + X**.
+2. Choose **Terminal** or **PowerShell**.
+3. Copy and paste this command, then press **Enter**:
+
+```powershell
+New-Item -ItemType Directory -Force -Path "$env:LOCALAPPDATA\WhisperPete\models"
+```
+
 Move the extracted folder named:
 
 ```text
@@ -27,8 +37,6 @@ to:
 ```text
 %LOCALAPPDATA%\WhisperPete\models\
 ```
-
-Create the folders if they do not already exist.
 
 ## 3. Use WhisperPete
 

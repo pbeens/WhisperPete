@@ -1,5 +1,12 @@
 # prompts.md
 
+## 2026-08-30T13:05:52-04:00 — Simplify model-folder setup
+
+- **Goal:** Make the README automatically create the model destination folder for first-time users.
+- **Prompt summary:** Reported that the documented model path does not exist on a new machine and asked for an automated way to create it.
+- **Computer:** XPS-8950
+- **Technical context:** Added a copy-and-paste PowerShell command that creates `%LOCALAPPDATA%\WhisperPete\models` before the Parakeet folder is moved there.
+
 ## 2026-08-30T12:36:42-04:00 — Retain only public-release prompt history
 
 - **Goal:** Remove prompts from before the current public release work.
