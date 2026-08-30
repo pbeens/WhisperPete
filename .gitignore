@@ -22,6 +22,10 @@ settings.json
 *.userosscache
 *.sln.docstates
 
+# --- Rust / Tauri rewrite ---
+whisperpete-rs/target/
+whisperpete-rs/gen/
+
 # --- VS Code ---
 .vscode/
 

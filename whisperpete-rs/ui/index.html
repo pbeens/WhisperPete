@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhisperPete</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; margin: 0; }
+    body { font: 16px/1.5 system-ui, sans-serif; padding: 28px; background: #111827; color: #f3f4f6; overflow-wrap: anywhere; }
+    h1 { margin-top: 0; }
+    .version { font-size: .55em; color: #93c5fd; font-weight: 500; }
+    p { max-width: 70ch; }
+    button { padding: 10px 14px; border: 0; border-radius: 8px; background: #0ea5e9; color: white; font-weight: 600; cursor: pointer; }
+    button:disabled { opacity: .6; cursor: wait; }
+    #status { margin: 18px 0; color: #a5b4fc; min-height: 3em; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>WhisperPete <span class="version">v1.0.0</span></h1>
+  <p>Local Parakeet dictation</p>
+  <p><a href="https://buymeacoffee.com/pbeens" target="_blank" rel="noopener">Buy Me a Coffee</a></p>
+  <p>Click <strong>Start recording</strong>, speak, then click <strong>Stop recording</strong>. Your transcript will be copied to the Windows clipboard; press <strong>Ctrl+V</strong> wherever you want it.</p>
+  <div style="padding:12px;border:1px solid #38bdf8;border-radius:8px;background:#0c4a6e;margin:16px 0"><strong>Start / stop hotkey: Alt+Shift+Space</strong><br><small>Works even when WhisperPete is not focused.</small></div>
+  <button id="toggle">Start recording</button>
+  <div id="status">Ready.</div>
+  <script>
+    const { invoke } = window.__TAURI__.core;
+    const { listen } = window.__TAURI__.event;
+    const button = document.querySelector('#toggle');
+    const status = document.querySelector('#status');
+    let recording = false;
+    let processing = false;
+    function setRecording(value) {
+      recording = value;
+      button.disabled = false;
+      button.textContent = recording ? 'Stop recording' : 'Start recording';
+      if (recording) {
+        processing = false;
+        status.textContent = 'Listening...';
+      } else if (!processing && status.textContent === 'Listening...') {
+        status.textContent = 'Ready.';
+      }
+    }
+    async function refresh() {
+      try {
+        const state = await invoke('status');
+        if (state.recording !== recording) setRecording(state.recording);
+      } catch (error) { status.textContent = String(error); }
+    }
+    listen('recording-state', event => setRecording(Boolean(event.payload)));
+    listen('recording-result', event => {
+      processing = false;
+      setRecording(false);
+      status.textContent = 'Copied to clipboard: ' + event.payload;
+    });
+    listen('recording-error', event => {
+      processing = false;
+      setRecording(false);
+      status.textContent = String(event.payload);
+    });
+    setInterval(refresh, 250);
+    button.onclick = async () => {
+      try {
+        if (recording) {
+          processing = true;
+          button.disabled = true;
+          status.textContent = 'Transcribing... please wait';
+          const text = await invoke('stop_recording');
+          processing = false;
+          status.textContent = 'Copied to clipboard: ' + text;
+          button.disabled = false;
+        } else {
+          await invoke('start_recording');
+          setRecording(true);
+        }
+      } catch (error) {
+        processing = false;
+        status.textContent = String(error);
+        button.disabled = false;
+      }
+      await refresh();
+    };
+    refresh();
+  </script>
+</body>
+</html>

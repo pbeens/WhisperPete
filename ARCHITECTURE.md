@@ -1,36 +1,23 @@
 # WhisperPete Architecture
 
-This document describes the core architecture of WhisperPete using Mermaid diagrams for native rendering.
-
-## System Flow
+WhisperPete 1.0.0 is a Rust/Tauri desktop application. The former .NET/WPF/Olive implementation has been retired.
 
 ```mermaid
 flowchart LR
-    subgraph "Input Layer"
-        A["Audio Input (NAudio)"]
-        B["Audio Buffer"]
-    end
-
-    subgraph "Processing Layer (AI)"
-        C["ONNX Engine (DirectML)"]
-        D["Whisper Model (Int8)"]
-    end
-
-    subgraph "Output Layer"
-        E["Text Injection (SendInput)"]
-    end
-
-    A --> B
-    B --> C
-    D -.-> C
-    C --> E
-
-    style C fill:#f9f,stroke:#333,stroke-width:2px
-    style E fill:#bfb,stroke:#333,stroke-width:2px
+    A[Microphone] --> B[cpal capture]
+    B --> C[Audio buffer]
+    C --> D[Parakeet TDT via sherpa-onnx]
+    D --> E[Windows clipboard]
+    F[Tauri global hotkey] --> B
+    G[Tauri window and tray] --> F
 ```
 
-## Description
+## Components
 
-1. **Input Layer**: Captures raw audio via `NAudio` and buffers it for processing.
-2. **Processing Layer**: The heart of the app. It uses `ONNX Runtime` with `DirectML` to leverage RTX GPUs for high-speed transcription.
-3. **Output Layer**: Once transcribed, the text is programmatically injected into the active window using the Windows `SendInput` API.
+1. **Tauri 2 shell:** Provides the application window, tray icon, and global `Alt+Shift+Space` shortcut.
+2. **Rust capture:** Uses `cpal` to capture microphone input and normalize samples.
+3. **Local transcription:** Uses the sherpa-onnx Rust API with the Parakeet TDT 0.6B v3 INT8 model.
+4. **Clipboard output:** Copies successful transcripts to the Windows clipboard. Automatic text injection is intentionally disabled during early release testing.
+5. **Model storage:** Reads model files from `%LOCALAPPDATA%\WhisperPete\models`.
+
+All audio processing and transcription remain local. No cloud service or application-context capture is part of the current product.
