@@ -2,7 +2,7 @@
 
 Local speech-to-text for Windows.
 
-Version 1.0.0.
+Version 1.0.1.
 
 ## 1. Download WhisperPete
 

@@ -1,5 +1,19 @@
 # prompts.md
 
+## 2026-08-30T13:24:29-04:00 — Prepare version 1.0.1
+
+- **Goal:** Release the support-link fix as WhisperPete version 1.0.1.
+- **Prompt summary:** Requested changing the release version from 1.0.0 to 1.0.1.
+- **Computer:** XPS-8950
+- **Technical context:** Active Rust/Tauri metadata, popup version, documentation, changelog, and staged executable will be updated and rebuilt as 1.0.1.
+
+## 2026-08-30T13:10:00-04:00 - Fix support link and add coffee icon
+
+- **Goal:** Make the Buy Me a Coffee link open in the default browser and display a coffee icon beside it.
+- **Prompt summary:** Reported that the popup link did not open a browser and supplied the desired coffee branding reference.
+- **Computer:** XPS-8950
+- **Technical context:** Added Tauri's opener plugin with a Rust command for the fixed HTTPS support URL and an inline coffee-cup icon in the popup.
+
 ## 2026-08-30T13:08:58-04:00 — Correct model archive instructions
 
 - **Goal:** Make the model download instructions accurately explain `.tar.bz2` extraction on Windows.

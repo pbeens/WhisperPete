@@ -1,6 +1,6 @@
 # Tasks
 
-## WhisperPete 1.0.0
+## WhisperPete 1.0.1
 
 ### Completed
 
@@ -18,7 +18,7 @@
 - [ ] Test microphone errors, missing-model errors, high-DPI display, tray behavior, and window resizing.
 - [ ] Test the release executable on a clean Windows machine with the documented setup steps.
 
-### Known 1.0.0 behavior
+### Known 1.0.1 behavior
 
 - Windows is the supported platform.
 - Transcription runs locally using Parakeet through sherpa-onnx.

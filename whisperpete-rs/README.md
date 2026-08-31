@@ -1,8 +1,8 @@
 # WhisperPete Developer Notes
 
-Version 1.0.0.
+Version 1.0.1.
 
-WhisperPete 1.0.0 uses Rust, Tauri 2, `cpal` capture, sherpa-onnx Rust bindings, and Parakeet TDT local transcription.
+WhisperPete 1.0.1 uses Rust, Tauri 2, `cpal` capture, sherpa-onnx Rust bindings, and Parakeet TDT local transcription.
 
 ## Build
 

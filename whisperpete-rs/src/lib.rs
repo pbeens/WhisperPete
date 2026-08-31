@@ -15,6 +15,7 @@ use tauri::{
     tray::TrayIconBuilder,
 };
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, ShortcutState};
+use tauri_plugin_opener::OpenerExt;
 
 #[derive(Default)]
 struct RecordingState(Arc<Mutex<Option<Recording>>>);
@@ -220,6 +221,13 @@ fn copy_to_clipboard(text: &str) -> Result<()> {
     Ok(())
 }
 
+#[tauri::command]
+fn open_support_url(app: AppHandle) -> Result<(), String> {
+    app.opener()
+        .open_url("https://buymeacoffee.com/pbeens", None::<&str>)
+        .map_err(|error| format!("Could not open support link: {error}"))
+}
+
 pub fn run() {
     tauri::Builder::default()
         .manage(RecordingState::default())
@@ -232,10 +240,12 @@ pub fn run() {
                 })
                 .build(),
         )
+        .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             status,
             start_recording,
-            stop_recording
+            stop_recording,
+            open_support_url
         ])
         .setup(|app| {
             let toggle = MenuItem::with_id(app, "toggle", "Toggle recording", true, None::<&str>)?;

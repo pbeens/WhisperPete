@@ -1,6 +1,6 @@
 # WhisperPete Architecture
 
-WhisperPete 1.0.0 is a Rust/Tauri desktop application. The former .NET/WPF/Olive implementation has been retired.
+WhisperPete 1.0.1 is a Rust/Tauri desktop application. The former .NET/WPF/Olive implementation has been retired.
 
 ```mermaid
 flowchart LR

@@ -10,6 +10,9 @@
     body { font: 16px/1.5 system-ui, sans-serif; padding: 28px; background: #111827; color: #f3f4f6; overflow-wrap: anywhere; }
     h1 { margin-top: 0; }
     .version { font-size: .55em; color: #93c5fd; font-weight: 500; }
+    .support { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; background: #ffdd00; color: #161616; font-weight: 700; text-decoration: none; }
+    .support:hover { background: #ffe866; }
+    .coffee-icon { width: 22px; height: 22px; }
     p { max-width: 70ch; }
     button { padding: 10px 14px; border: 0; border-radius: 8px; background: #0ea5e9; color: white; font-weight: 600; cursor: pointer; }
     button:disabled { opacity: .6; cursor: wait; }
@@ -17,9 +20,9 @@
   </style>
 </head>
 <body>
-  <h1>WhisperPete <span class="version">v1.0.0</span></h1>
+  <h1>WhisperPete <span class="version">v1.0.1</span></h1>
   <p>Local Parakeet dictation</p>
-  <p><a href="https://buymeacoffee.com/pbeens" target="_blank" rel="noopener">Buy Me a Coffee</a></p>
+  <p><a class="support" id="support" href="https://buymeacoffee.com/pbeens"><svg class="coffee-icon" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#ffdd00"/><path d="M9 11h13v8.5A5.5 5.5 0 0 1 16.5 25h-2A5.5 5.5 0 0 1 9 19.5V11Zm13 2h2a3 3 0 0 1 0 6h-2" fill="none" stroke="#16102b" stroke-width="2.4" stroke-linejoin="round"/><path d="M8 9h16M11 7h10" fill="none" stroke="#16102b" stroke-width="2.4" stroke-linecap="round"/></svg>Buy Me a Coffee</a></p>
   <p>Click <strong>Start recording</strong>, speak, then click <strong>Stop recording</strong>. Your transcript will be copied to the Windows clipboard; press <strong>Ctrl+V</strong> wherever you want it.</p>
   <div style="padding:12px;border:1px solid #38bdf8;border-radius:8px;background:#0c4a6e;margin:16px 0"><strong>Start / stop hotkey: Alt+Shift+Space</strong><br><small>Works even when WhisperPete is not focused.</small></div>
   <button id="toggle">Start recording</button>
@@ -28,6 +31,7 @@
     const { invoke } = window.__TAURI__.core;
     const { listen } = window.__TAURI__.event;
     const button = document.querySelector('#toggle');
+    const support = document.querySelector('#support');
     const status = document.querySelector('#status');
     let recording = false;
     let processing = false;
@@ -60,6 +64,11 @@
       status.textContent = String(event.payload);
     });
     setInterval(refresh, 250);
+    support.onclick = async event => {
+      event.preventDefault();
+      try { await invoke('open_support_url'); }
+      catch (error) { status.textContent = String(error); }
+    };
     button.onclick = async () => {
       try {
         if (recording) {
