@@ -1,11 +1,13 @@
 # Changelog
 
-## [1.0.1] - 2026-08-30
+## [1.0.1] - 2026-08-31
 
 Maintenance release.
 
 - Fixed the Buy Me a Coffee link so it opens in the default browser.
 - Added the coffee icon beside the support link.
+- Added automatic first-run speech-model download and installation.
+- Added a Windows NSIS installer for normal setup.
 
 ## [1.0.0] - 2026-08-30
 

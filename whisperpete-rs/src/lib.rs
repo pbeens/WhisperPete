@@ -6,7 +6,9 @@ use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use serde::Serialize;
 use sherpa_onnx::{OfflineRecognizer, OfflineRecognizerConfig, OfflineTransducerModelConfig};
 use std::{
-    path::PathBuf,
+    fs::{self, File},
+    io::{Read, Write},
+    path::{Path, PathBuf},
     sync::{Arc, Mutex},
 };
 use tauri::{
@@ -30,18 +32,41 @@ struct Recording {
 struct Status {
     recording: bool,
     model_dir: String,
+    model_installed: bool,
 }
+
+#[derive(Serialize, Clone)]
+struct ModelProgress {
+    downloaded: u64,
+    total: Option<u64>,
+    percent: Option<u8>,
+    phase: String,
+}
+
+const MODEL_FOLDER: &str = "sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8";
+const MODEL_URL: &str = "https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8.tar.bz2";
 
 #[tauri::command]
 fn status(state: State<'_, RecordingState>) -> Status {
     Status {
         recording: state.0.lock().expect("recording state poisoned").is_some(),
         model_dir: model_dir().display().to_string(),
+        model_installed: model_files_present(&model_dir()),
     }
 }
 
 #[tauri::command]
+async fn install_model(app: AppHandle) -> Result<String, String> {
+    tauri::async_runtime::spawn_blocking(move || install_model_blocking(&app))
+        .await
+        .map_err(|error| format!("Model installer failed: {error}"))?
+}
+
+#[tauri::command]
 fn start_recording(state: State<'_, RecordingState>) -> Result<(), String> {
+    if !model_files_present(&model_dir()) {
+        return Err("Install the speech model before recording".to_string());
+    }
     let mut guard = state.0.lock().map_err(|e| e.to_string())?;
     if guard.is_some() {
         return Ok(());
@@ -109,17 +134,130 @@ fn finish_recording(recording: Recording) -> Result<String, String> {
     Ok(transcript)
 }
 
-fn model_dir() -> PathBuf {
+fn model_base_dir() -> PathBuf {
     std::env::var_os("WHISPERPETE_MODEL_DIR")
         .map(PathBuf::from)
+        .and_then(|path| path.parent().map(Path::to_path_buf))
         .unwrap_or_else(|| {
             std::env::var_os("LOCALAPPDATA")
                 .map(PathBuf::from)
                 .unwrap_or_else(|| PathBuf::from("."))
                 .join("WhisperPete")
                 .join("models")
-                .join("sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8")
         })
+}
+
+fn model_dir() -> PathBuf {
+    if std::env::var_os("WHISPERPETE_MODEL_DIR").is_some() {
+        model_base_dir()
+    } else {
+        model_base_dir().join(MODEL_FOLDER)
+    }
+}
+
+fn model_files_present(dir: &Path) -> bool {
+    [
+        "encoder.int8.onnx",
+        "decoder.int8.onnx",
+        "joiner.int8.onnx",
+        "tokens.txt",
+    ]
+    .iter()
+    .all(|file| dir.join(file).is_file())
+}
+
+fn install_model_blocking(app: &AppHandle) -> Result<String, String> {
+    if model_files_present(&model_dir()) {
+        return Ok("The speech model is already installed.".to_string());
+    }
+
+    let base = model_base_dir();
+    let temp_dir = base.join(".parakeet-installing");
+    let archive_path = base.join(".parakeet-download.tar.bz2");
+    fs::create_dir_all(&base).map_err(|error| format!("Could not create model folder: {error}"))?;
+    if temp_dir.exists() {
+        fs::remove_dir_all(&temp_dir)
+            .map_err(|error| format!("Could not clear incomplete model install: {error}"))?;
+    }
+    fs::create_dir_all(&temp_dir)
+        .map_err(|error| format!("Could not prepare model install: {error}"))?;
+
+    let mut response = reqwest::blocking::get(MODEL_URL)
+        .and_then(|response| response.error_for_status())
+        .map_err(|error| format!("Could not download the speech model: {error}"))?;
+    let total = response.content_length();
+    let mut output = File::create(&archive_path)
+        .map_err(|error| format!("Could not create model download file: {error}"))?;
+    let mut buffer = [0_u8; 64 * 1024];
+    let mut downloaded = 0_u64;
+    loop {
+        let count = response
+            .read(&mut buffer)
+            .map_err(|error| format!("Could not read model download: {error}"))?;
+        if count == 0 {
+            break;
+        }
+        output
+            .write_all(&buffer[..count])
+            .map_err(|error| format!("Could not save model download: {error}"))?;
+        downloaded += count as u64;
+        let _ = app.emit(
+            "model-progress",
+            ModelProgress {
+                downloaded,
+                total,
+                percent: total.map(|size| ((downloaded.saturating_mul(100) / size).min(100)) as u8),
+                phase: "Downloading speech model...".to_string(),
+            },
+        );
+    }
+    output
+        .flush()
+        .map_err(|error| format!("Could not finish model download: {error}"))?;
+    drop(output);
+
+    let _ = app.emit(
+        "model-progress",
+        ModelProgress {
+            downloaded,
+            total,
+            percent: Some(100),
+            phase: "Extracting speech model...".to_string(),
+        },
+    );
+    let archive = File::open(&archive_path)
+        .map_err(|error| format!("Could not open model archive: {error}"))?;
+    let decoder = bzip2::read::BzDecoder::new(archive);
+    tar::Archive::new(decoder)
+        .unpack(&temp_dir)
+        .map_err(|error| format!("Could not extract speech model: {error}"))?;
+
+    let extracted_dir = temp_dir.join(MODEL_FOLDER);
+    if !model_files_present(&extracted_dir) {
+        return Err("The downloaded model is incomplete or has an unexpected layout.".to_string());
+    }
+    let destination = model_dir();
+    if destination.exists() {
+        fs::remove_dir_all(&destination)
+            .map_err(|error| format!("Could not replace incomplete model: {error}"))?;
+    }
+    fs::rename(&extracted_dir, &destination)
+        .map_err(|error| format!("Could not install speech model: {error}"))?;
+    let _ = fs::remove_dir_all(&temp_dir);
+    let _ = fs::remove_file(&archive_path);
+    let _ = app.emit(
+        "model-progress",
+        ModelProgress {
+            downloaded,
+            total,
+            percent: Some(100),
+            phase: "Speech model ready.".to_string(),
+        },
+    );
+    Ok(format!(
+        "Speech model installed in {}",
+        destination.display()
+    ))
 }
 
 fn capture_audio() -> Result<Recording> {
@@ -243,6 +381,7 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             status,
+            install_model,
             start_recording,
             stop_recording,
             open_support_url

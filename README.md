@@ -6,44 +6,17 @@ Version 1.0.1.
 
 ## 1. Download WhisperPete
 
-[Download WhisperPete.exe](release/WhisperPete.exe)
+[Download the WhisperPete installer](release/WhisperPete-1.0.1-Setup.exe)
 
-Save the file and double-click it.
+Save the file and double-click it. The installer creates the application folders and adds WhisperPete to your Start menu.
 
-## 2. Download the speech model
+To remove WhisperPete later, use **Windows Settings → Apps → Installed apps** and choose **WhisperPete → Uninstall**.
 
-[Download the Parakeet model](https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8.tar.bz2)
+## 2. Install the speech model
 
-The download is about 670 MB. Windows does not extract `.tar.bz2` files by itself, so install [7-Zip](https://www.7-zip.org/download.html) first.
+The first time you open WhisperPete, click **Install speech model**. WhisperPete will create the required folders, download the approximately 670 MB Parakeet model, extract it, and check that it is ready.
 
-After installing 7-Zip:
-
-1. Right-click the downloaded file.
-2. Choose **7-Zip → Extract Here**. This creates a `.tar` file.
-3. Right-click the new `.tar` file.
-4. Choose **7-Zip → Extract Here** again.
-
-Before moving the model, create its destination folder automatically:
-
-1. Press **Windows key + X**.
-2. Choose **Terminal** or **PowerShell**.
-3. Copy and paste this command, then press **Enter**:
-
-```powershell
-New-Item -ItemType Directory -Force -Path "$env:LOCALAPPDATA\WhisperPete\models"
-```
-
-Move the extracted folder named:
-
-```text
-sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8
-```
-
-to:
-
-```text
-%LOCALAPPDATA%\WhisperPete\models\
-```
+The first setup requires an internet connection. After the model is installed, transcription works locally on your computer.
 
 ## 3. Use WhisperPete
 

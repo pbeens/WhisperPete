@@ -17,7 +17,7 @@ flowchart LR
 1. **Tauri 2 shell:** Provides the application window, tray icon, and global `Alt+Shift+Space` shortcut.
 2. **Rust capture:** Uses `cpal` to capture microphone input and normalize samples.
 3. **Local transcription:** Uses the sherpa-onnx Rust API with the Parakeet TDT 0.6B v3 INT8 model.
-4. **Clipboard output:** Copies successful transcripts to the Windows clipboard. Automatic text injection is intentionally disabled during early release testing.
-5. **Model storage:** Reads model files from `%LOCALAPPDATA%\WhisperPete\models`.
+4. **Model setup:** Downloads, extracts, and validates the model from the first-run setup screen, then stores it under `%LOCALAPPDATA%\WhisperPete\models`.
+5. **Clipboard output:** Copies successful transcripts to the Windows clipboard. Automatic text injection is not included in this release.
 
 All audio processing and transcription remain local. No cloud service or application-context capture is part of the current product.

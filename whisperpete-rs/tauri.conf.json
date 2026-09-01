@@ -9,5 +9,13 @@
     "windows": [{ "label": "main", "title": "WhisperPete", "width": 560, "height": 420, "minWidth": 420, "minHeight": 320, "visible": true, "resizable": true }],
     "security": { "csp": null }
   },
-  "bundle": { "active": true, "targets": "all", "icon": ["icons/icon.png"] }
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "icon": ["icons/icon.png"],
+    "windows": {
+      "webviewInstallMode": { "type": "downloadBootstrapper" },
+      "nsis": { "installMode": "currentUser" }
+    }
+  }
 }

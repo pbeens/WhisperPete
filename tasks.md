@@ -5,6 +5,7 @@
 ### Completed
 
 - [x] Build and stage the optimized Windows release executable.
+- [x] Build and stage the Windows NSIS installer.
 - [x] Add the version number to the popup window.
 - [x] Add the Buy Me a Coffee link to the popup and README.
 - [x] Provide simple executable and Parakeet model setup instructions.
@@ -13,6 +14,7 @@
 ### Remaining validation
 
 - [ ] Test a complete recording and transcription with the Parakeet model installed.
+- [ ] Test first-run model download and extraction on a clean Windows machine.
 - [ ] Verify the global `Alt+Shift+Space` hotkey starts and stops recording while another application is focused.
 - [ ] Verify the completed transcript is copied correctly to the Windows clipboard.
 - [ ] Test microphone errors, missing-model errors, high-DPI display, tray behavior, and window resizing.
@@ -29,4 +31,4 @@
 
 ## Handoff
 
-The active product is the Rust/Tauri application in `whisperpete-rs/`. The release artifact is `release/WhisperPete.exe`.
+The active product is the Rust/Tauri application in `whisperpete-rs/`. The public release artifacts are `release/WhisperPete-1.0.1-Setup.exe` and `release/WhisperPete.exe`.

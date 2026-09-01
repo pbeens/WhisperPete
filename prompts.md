@@ -1,5 +1,26 @@
 # prompts.md
 
+## 2026-09-01T07:19:37-04:00 — Audit 1.0.1 documentation
+
+- **Goal:** Confirm and correct all documentation for the 1.0.1 release.
+- **Prompt summary:** Requested a documentation review after the Windows installer and automatic model setup were added.
+- **Computer:** XPS-8950
+- **Technical context:** Updated architecture, developer setup, end-user uninstall instructions, and release artifact references to match the current Rust/Tauri 1.0.1 implementation.
+
+## 2026-08-31T17:25:57-04:00 — Build the Windows installer
+
+- **Goal:** Replace the loose executable setup with a normal Windows installer and automatic first-run model installation.
+- **Prompt summary:** Approved the recommendation to create the Windows installer and automatic model setup.
+- **Computer:** XPS-8950
+- **Technical context:** Added in-app Parakeet download/extraction/validation, generated `WhisperPete-1.0.1-Setup.exe` with Tauri NSIS bundling, and updated the end-user setup instructions.
+
+## 2026-08-31T00:00:00-04:00 — Add automatic model setup
+
+- **Goal:** Make Windows installation efficient by providing an in-app first-run model installer.
+- **Prompt summary:** Approved creating a Windows installer and automatic speech-model setup.
+- **Computer:** XPS-8950
+- **Technical context:** The Rust/Tauri app now creates its model directory, downloads the Parakeet archive, extracts and validates the required files, and reports progress in the UI.
+
 ## 2026-08-30T13:24:29-04:00 — Prepare version 1.0.1
 
 - **Goal:** Release the support-link fix as WhisperPete version 1.0.1.
